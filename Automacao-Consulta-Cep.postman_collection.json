@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "fb8f04da-f951-4d87-8d11-5399b0cd2f17",
+		"name": "Automacao-Consulta-Cep",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CONSULTA",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"CEP_NUMBER\", pm.environment.get(\"CEP\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Atribudo bairro não deve vir nullo\",function(){",
+							"    const $ = cheerio.load(responseBody);",
+							"    pm.expect($('bairro').text()).not.eql(\"\");",
+							"});",
+							"",
+							"pm.test(\"Atributo cep não deve vir nullo\",function(){",
+							"    const $ = cheerio.load(responseBody);",
+							"    pm.expect($('cep').text()).not.eql(\"\");",
+							"});",
+							"",
+							"pm.test(\"Atributo cidade não deve vir nullo\",function(){",
+							"    const $ = cheerio.load(responseBody);",
+							"    pm.expect($('cidade').text()).not.eql(\"\");",
+							"});",
+							"",
+							"pm.test(\"Atributo complemento2 não deve vir nullo\",function(){",
+							"    const $ = cheerio.load(responseBody);",
+							"    pm.expect($('complemento2').text()).not.eql(\"\");",
+							"});",
+							"",
+							"pm.test(\"Atributo end não deve vir nullo\",function(){",
+							"    const $ = cheerio.load(responseBody);",
+							"    pm.expect($('end').text()).not.eql(\"\");",
+							"});",
+							"",
+							"pm.test(\"Atributo uf não deve vir nullo\",function(){",
+							"    const $ = cheerio.load(responseBody);",
+							"    pm.expect($('uf').text()).not.eql(\"\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<Envelope xmlns=\"http://schemas.xmlsoap.org/soap/envelope/\">\n    <Body>\n        <consultaCEP xmlns=\"http://cliente.bean.master.sigep.bsb.correios.com.br/\">\n            <cep xmlns=\"\">{{CEP_NUMBER}}</cep>\n        </consultaCEP>\n    </Body>\n</Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl",
+					"protocol": "https",
+					"host": [
+						"apps",
+						"correios",
+						"com",
+						"br"
+					],
+					"path": [
+						"SigepMasterJPA",
+						"AtendeClienteService",
+						"AtendeCliente"
+					],
+					"query": [
+						{
+							"key": "wsdl",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "CEP_NUMBER",
+			"value": ""
+		}
+	]
+}
